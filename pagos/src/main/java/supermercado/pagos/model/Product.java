@@ -1,10 +1,9 @@
 package supermercado.pagos.model;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -23,11 +22,13 @@ public class Product {
     private Long id;
 
     @NotNull
+    @JsonProperty("name") // 🔥 AGREGA
     private String nombre;
 
     private String descripcion;
 
     @Positive
+    @JsonProperty("price") // 🔥 AGREGA
     private BigDecimal precio;
 
     @Min(0)
@@ -37,6 +38,7 @@ public class Product {
 
     private Boolean activo;
 
+    @JsonIgnore // 🔥 EVITA ERROR JSON
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

@@ -1,5 +1,6 @@
 package supermercado.pagos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -27,6 +28,7 @@ public class User {
     private String email;
 
     @NotNull
+    @JsonIgnore // FIX: nunca se debe enviar el hash de la contraseña al frontend
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -34,6 +36,7 @@ public class User {
 
     private Boolean activo;
 
+    @JsonIgnore // FIX: evita el ciclo infinito User -> transactions -> user -> transactions...
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 }

@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import supermercado.pagos.model.Product;
 import supermercado.pagos.repository.ProductRepository;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class ProductController {
 
     @Autowired
@@ -15,6 +17,6 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findByActivoTrue();
     }
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear cuenta — Mercado Fresco</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="auth-card__logo">🛒 Mercado Fresco</div>
+      <div class="auth-card__tagline">Crea tu cuenta de cliente</div>
+
+      <div id="alertBox"></div>
+
+      <form id="registerForm">
+        <div class="field">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="pass">Contraseña</label>
+          <input type="password" id="pass" required minlength="6" autocomplete="new-password" />
+        </div>
+        <button type="submit" class="btn btn--primary" id="submitBtn">Crear cuenta</button>
+      </form>
+
+      <p class="mt-16" style="text-align:center; font-size:0.88rem;">
+        ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>
