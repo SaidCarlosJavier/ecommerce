@@ -22,13 +22,13 @@ public class Product {
     private Long id;
 
     @NotNull
-    @JsonProperty("name") // 🔥 AGREGA
+    @JsonProperty("name")
     private String nombre;
 
     private String descripcion;
 
     @Positive
-    @JsonProperty("price") // 🔥 AGREGA
+    @JsonProperty("price")
     private BigDecimal precio;
 
     @Min(0)

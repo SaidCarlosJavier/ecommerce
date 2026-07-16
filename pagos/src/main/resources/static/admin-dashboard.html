@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reportes — Panel Admin</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="topbar" class="topbar"></div>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Todas las compras</h1>
+    </div>
+    <div id="alertBox"></div>
+    <div id="statsRow" class="mt-16" style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:20px;"></div>
+    <div id="ordersTableWrap"></div>
+  </div>
+
+  <!-- Modal de detalle de una compra -->
+  <div id="detailModal" class="hidden" style="position:fixed; inset:0; background:rgba(37,39,43,0.5); display:flex; align-items:center; justify-content:center; z-index:1000;">
+    <div style="background:white; border-radius:14px; padding:24px; width:100%; max-width:440px; max-height:80vh; overflow-y:auto;">
+      <div class="flex-between">
+        <h3 style="margin:0;">Detalle de compra</h3>
+        <button class="btn btn--outline btn--sm" id="closeModalBtn">Cerrar</button>
+      </div>
+      <div id="modalBody" class="mt-16"></div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

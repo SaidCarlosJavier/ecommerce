@@ -10,6 +10,7 @@ import supermercado.pagos.model.*;
 import supermercado.pagos.repository.CategoryRepository;
 import supermercado.pagos.repository.ProductRepository;
 import supermercado.pagos.repository.TransactionRepository;
+import supermercado.pagos.repository.UserRepository;
 import supermercado.pagos.service.AuthService;
 import supermercado.pagos.service.CartService;
 import supermercado.pagos.service.CheckoutFacade;
@@ -28,15 +29,50 @@ public class SimuladorEcosistemaBackend implements CommandLineRunner {
     private final CartService cartService;
     private final CheckoutFacade checkoutFacade;
     private final TransactionRepository transactionRepository;
+    private final UserRepository userRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("\n=== 🚀 INICIANDO SIMULACIÓN COMPLETA DEL BACKEND ===");
+        System.out.println("\n===  INICIANDO SIMULACIÓN COMPLETA DEL BACKEND ===");
 
         // 1. Configuración del escenario (Catálogo de productos)
         Category categoriaAbarrotes = crearCategoriaSujeto();
         Product arroz = crearProductoSujeto("Arroz Integral", new BigDecimal("4.50"), 50, categoriaAbarrotes);
         Product leche = crearProductoSujeto("Leche Entera 1L", new BigDecimal("3.20"), 100, categoriaAbarrotes);
+        Product azucar = crearProductoSujeto("Azúcar Rubia 1Kg", new BigDecimal("3.80"), 80, categoriaAbarrotes);
+        Product sal = crearProductoSujeto("Sal de Mesa 1Kg", new BigDecimal("1.50"), 120, categoriaAbarrotes);
+        Product fideos = crearProductoSujeto("Fideos Spaghetti 500g", new BigDecimal("2.20"), 90, categoriaAbarrotes);
+        Product aceite = crearProductoSujeto("Aceite Vegetal 1L", new BigDecimal("7.50"), 60, categoriaAbarrotes);
+        Product atun = crearProductoSujeto("Atún en Lata", new BigDecimal("4.00"), 70, categoriaAbarrotes);
+        Product lentejas = crearProductoSujeto("Lentejas 500g", new BigDecimal("2.80"), 85, categoriaAbarrotes);
+        Product frejoles = crearProductoSujeto("Frejoles Canarios 500g", new BigDecimal("3.50"), 75, categoriaAbarrotes);
+        Product harina = crearProductoSujeto("Harina de Trigo 1Kg", new BigDecimal("3.00"), 65, categoriaAbarrotes);
+        Product avena = crearProductoSujeto("Avena en Hojuelas 500g", new BigDecimal("2.60"), 50, categoriaAbarrotes);
+        Product galletas = crearProductoSujeto("Galletas Soda", new BigDecimal("1.80"), 110, categoriaAbarrotes);
+
+        Product yogurt = crearProductoSujeto("Yogurt Natural 1L", new BigDecimal("5.20"), 40, categoriaAbarrotes);
+        Product queso = crearProductoSujeto("Queso Fresco 500g", new BigDecimal("8.50"), 35, categoriaAbarrotes);
+        Product mantequilla = crearProductoSujeto("Mantequilla 200g", new BigDecimal("4.90"), 45, categoriaAbarrotes);
+        Product jamon = crearProductoSujeto("Jamón de Pavo 250g", new BigDecimal("6.70"), 30, categoriaAbarrotes);
+        Product pollo = crearProductoSujeto("Pollo Entero", new BigDecimal("12.00"), 25, categoriaAbarrotes);
+
+        Product manzana = crearProductoSujeto("Manzana Roja 1Kg", new BigDecimal("4.00"), 100, categoriaAbarrotes);
+        Product platano = crearProductoSujeto("Plátano 1Kg", new BigDecimal("3.20"), 90, categoriaAbarrotes);
+        Product naranja = crearProductoSujeto("Naranja 1Kg", new BigDecimal("2.80"), 85, categoriaAbarrotes);
+        Product papa = crearProductoSujeto("Papa Blanca 1Kg", new BigDecimal("2.50"), 120, categoriaAbarrotes);
+        Product zanahoria = crearProductoSujeto("Zanahoria 1Kg", new BigDecimal("2.20"), 110, categoriaAbarrotes);
+
+        Product tomate = crearProductoSujeto("Tomate 1Kg", new BigDecimal("3.00"), 95, categoriaAbarrotes);
+        Product cebolla = crearProductoSujeto("Cebolla Roja 1Kg", new BigDecimal("2.70"), 100, categoriaAbarrotes);
+        Product ajo = crearProductoSujeto("Ajo 250g", new BigDecimal("1.90"), 60, categoriaAbarrotes);
+        Product limon = crearProductoSujeto("Limón 1Kg", new BigDecimal("3.50"), 80, categoriaAbarrotes);
+        Product palta = crearProductoSujeto("Palta 1Kg", new BigDecimal("6.00"), 50, categoriaAbarrotes);
+
+        Product agua = crearProductoSujeto("Agua Mineral 1.5L", new BigDecimal("2.00"), 150, categoriaAbarrotes);
+        Product gaseosa = crearProductoSujeto("Gaseosa Cola 2L", new BigDecimal("5.50"), 130, categoriaAbarrotes);
+        Product jugo = crearProductoSujeto("Jugo de Naranja 1L", new BigDecimal("4.20"), 70, categoriaAbarrotes);
+        Product cafe = crearProductoSujeto("Café Instantáneo 200g", new BigDecimal("9.50"), 40, categoriaAbarrotes);
+        Product te = crearProductoSujeto("Té en Bolsitas", new BigDecimal("3.30"), 60, categoriaAbarrotes);
 
         // 2. Flujo de Autenticación (Fase 6 Frontend)
         User usuarioLogueado = simularRegistroYLogin();
@@ -106,7 +142,36 @@ public class SimuladorEcosistemaBackend implements CommandLineRunner {
         System.out.println("[CARRITO] Cantidad de ítems diferentes: " + carritoActual.getItems().size());
         System.out.println("[CARRITO] Monto Neto calculado en DTO: $" + carritoActual.getTotalAmount());
     }
+    /**
+     * FUNCIÓN 2b: Registro y Autenticación de un Administrador
+     * (Solo para pruebas/seed local — nunca expongas esto como endpoint público)
+     */
+    private User simularRegistroYLoginAdmin() {
+        System.out.println("\n[AUTH] Registrando nuevo administrador...");
+        RegisterRequest reg = new RegisterRequest();
+        reg.setNombre("Said Admin");
+        reg.setEmail("admin@said.com");
+        reg.setPass("SAIDcarlos12#");
 
+        User usuarioRegistrado = authService.register(reg); // se crea como CLIENT por defecto
+        System.out.println("[AUTH] Usuario creado con ID: " + usuarioRegistrado.getId());
+
+        // Ascenso manual a ADMIN — el registro público NUNCA debe permitir esto directamente
+        usuarioRegistrado.setRole(Role.ADMIN);
+        usuarioRegistrado = userRepository.save(usuarioRegistrado);
+        System.out.println("[AUTH] Usuario ascendido a rol: " + usuarioRegistrado.getRole());
+
+        System.out.println("[AUTH] Intentando login con credenciales...");
+        LoginRequest login = new LoginRequest();
+        login.setEmail("admin@said.com");
+        login.setPass("SAIDcarlos12#");
+
+        User usuarioAutenticado = authService.login(login);
+        System.out.println("[AUTH] Token de sesión simulado para: " + usuarioAutenticado.getNombre()
+                + " (rol: " + usuarioAutenticado.getRole() + ")");
+
+        return usuarioAutenticado;
+    }
     /**
      * FUNCIÓN 4: Ejecución del Patrón Facade para la Transacción
      */
